@@ -1,0 +1,98 @@
+#+TITLE: Daily Classifier
+#+AUTHOR: Eid Alkhaldi
+#+OPTIONS: toc:t num:t
+
+    Overview
+
+This is a lightweight command-line image classification tool that automatically organizes images into six worksite-related categories:
+
+    civil
+
+    electric
+
+    hvac
+
+    garden
+
+    cleaning
+
+    mech
+
+It uses a pretrained EfficientNet-B0 model fine-tuned for these six classes. When you run the script, it will:
+
+    Load the model from disk
+
+    Predict the label of each image in the current directory
+
+    Copy the image into a subfolder named after the predicted class (e.g., =classified/civil/=)
+
+Original images are not modified.
+
+    Directory Structure
+
+#+BEGIN_SRC
+.
+├── classify_and_copy_images.py # Main script
+├── models/
+│ └── best_model.pth # Trained PyTorch model
+├── classified/ # Output folder (created automatically)
+│ ├── civil/
+│ ├── electric/
+│ └── ...
+└── README.org
+#+END_SRC
+
+    Setup
+
+    Create a virtual environment (optional but recommended):
+
+#+BEGIN_SRC bash
+conda create -n daily_classifier python=3.9 -y
+conda activate daily_classifier
+#+END_SRC
+
+    Install dependencies:
+
+#+BEGIN_SRC bash
+pip install torch torchvision pillow tqdm
+#+END_SRC
+
+    Usage
+
+    Place =classify_and_copy_images.py= in the folder containing the images you want to classify.
+
+    Ensure the =models/best_model.pth= file is in place.
+
+    From the terminal, run:
+
+#+BEGIN_SRC bash
+python classify_and_copy_images.py
+#+END_SRC
+
+After it finishes, all classified images will be copied into =classified/{label}/= folders.
+
+    Model
+
+    Architecture: EfficientNet-B0 (via torchvision)
+
+    Format: PyTorch state_dict
+
+    Trained on labeled worksite data for six categories
+
+If you want to train your own model for this structure, refer to the notebook in =nbs/basic training.ipynb= (if available).
+
+    Notes
+
+    Images are not deleted or moved, only copied
+
+    Folder structure will be created automatically
+
+    Supports JPG, JPEG, PNG
+
+    License
+
+MIT License
+
+    Disclaimer
+
+This tool is provided "as is" without warranty of any kind. Use it at your own risk.
